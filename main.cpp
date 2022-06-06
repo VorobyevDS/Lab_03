@@ -61,6 +61,7 @@ show_histogram_text(const auto bins){
     }
 
 }
+
 void
 svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -86,13 +87,12 @@ svg_end() {
 }
 
 void
-show_histogram_svg(const vector<size_t>& bins) {
+show_histogram_svg(const vector<size_t>& bins, const auto bin_height) {
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
     const auto TEXT_LEFT = 20;
     const auto TEXT_BASELINE = 20;
     const auto TEXT_WIDTH = 50;
-    const auto BIN_HEIGHT = 30;
     const auto BLOCK_WIDTH = 10;
     double MAX_WIDTH = (IMAGE_WIDTH - TEXT_WIDTH);
     size_t max_bin = bins[0];
@@ -112,8 +112,8 @@ show_histogram_svg(const vector<size_t>& bins) {
             bin_width = MAX_WIDTH * (static_cast<double>(bin) / max_bin);
         }
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "black", "black");
-        top += BIN_HEIGHT;
+        svg_rect(TEXT_WIDTH, top, bin_width, bin_height, "black", "black");
+        top += bin_height;
 }
     svg_end();
 }
@@ -131,13 +131,17 @@ int main() {
     cerr << "Enter column count: ";
     cin >> bin_count;
 
+    size_t bin_height;
+    cerr <<"bin_height=";
+    cin>>bin_height;
+
     // Обработка данных
     double min, max;
     find_minmax(numbers, min, max);
 
     const auto bins = make_histogram(numbers, bin_count, min, max);
 
-    show_histogram_svg(bins);
+    show_histogram_svg(bins, bin_height);
 
     return 0;
 }
