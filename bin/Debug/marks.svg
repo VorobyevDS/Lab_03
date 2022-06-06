@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <svg width='400' height='700' viewBox='0 0 400 700' xmlns='http://www.w3.org/2000/svg'>
-<text x='20' y='20'>2</text><rect x= '50' y='0' width='20' height='100' stroke='red' fill='red' />
- <text x='20' y='120'>5</text><rect x= '50' y='100' width='50' height='100' stroke='red' fill='red' />
- <text x='20' y='220'>3</text><rect x= '50' y='200' width='30' height='100' stroke='red' fill='red' />
+Error<text x='20' y='20'>2</text><rect x= '50' y='0' width='20' height='-100' stroke='red' fill='red' />
+ Error<text x='20' y='-80'>5</text><rect x= '50' y='-100' width='50' height='-100' stroke='red' fill='red' />
+ Error<text x='20' y='-180'>3</text><rect x= '50' y='-200' width='30' height='-100' stroke='red' fill='red' />
  </svg>

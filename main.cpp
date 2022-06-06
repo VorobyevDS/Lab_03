@@ -111,8 +111,13 @@ show_histogram_svg(const vector<size_t>& bins, int bin_height, int bin_count) {
         {
             bin_width = MAX_WIDTH * (static_cast<double>(bin) / max_bin);
         }
-        if (bin_height>IMAGE_HEIGHT){
-            bin_height=IMAGE_HEIGHT/bin_count;
+        if (bin_height<=0 || bin_count<=0){
+            break;
+        }
+        else{
+            if (bin_height>IMAGE_HEIGHT){
+                bin_height=IMAGE_HEIGHT/bin_count;
+            }
         }
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
         svg_rect(TEXT_WIDTH, top, bin_width, bin_height, "red", "red");

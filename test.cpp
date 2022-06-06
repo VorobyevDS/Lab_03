@@ -34,6 +34,20 @@ test_uno() {
     assert(min == 2);
     assert(max == 2);
 }
+void
+bin_height_test(double Height, const auto bin_count){
+    const auto IMAGE_HEIGHT=700;
+    assert(Height>0 & bin_count>0);
+}
+
+void
+test_Individual_1() {
+    bin_height_test(100, 2);
+}
+void
+test_Individual_2() {
+    bin_height_test(900, 4);
+}
 
 int
 main() {
@@ -41,4 +55,6 @@ main() {
     test_negative();
     test_same();
     test_uno();
+    test_Individual_1();
+    test_Individual_2();
 }
