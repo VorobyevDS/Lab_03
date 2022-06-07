@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1654629494 source:c:\users\vorok\desktop\lab04\histogram.cpp
+	<vector>
+	"histogram.h"
+
+1654629494 c:\users\vorok\desktop\lab04\histogram.h
+	<iostream>
+	<vector>
+
+1654630721 source:c:\users\vorok\desktop\lab04\main.cpp
+	<iostream>
+	<vector>
+	<curl/curl.h>
+	"histogram.h"
+	"svg.h"
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\curl.h
+	"curlver.h"
+	"system.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	"easy.h"
+	"multi.h"
+	"urlapi.h"
+	"options.h"
+	"header.h"
+	"typecheck-gcc.h"
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\curlver.h
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\system.h
+	<winsock2.h>
+	<windows.h>
+	<ws2tcpip.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/poll.h>
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\easy.h
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\multi.h
+	"curl.h"
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\urlapi.h
+	"curl.h"
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\options.h
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\header.h
+
+1654630275 c:\users\vorok\desktop\lab04\curl\include\curl\typecheck-gcc.h
+
+1654628955 c:\users\vorok\desktop\lab04\svg.h
+	<iostream>
+	<vector>
+	<string>
+
+1654629493 source:c:\users\vorok\desktop\lab04\svg.cpp
+	<iostream>
+	<vector>
+	"svg.h"
+
