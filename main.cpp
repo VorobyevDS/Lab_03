@@ -127,7 +127,8 @@ show_histogram_svg(const vector<size_t>& bins, int bin_height, int bin_count) {
 }
 
 int main() {
-    // ¬вод данных
+    // ¬вод данных gg
+
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
