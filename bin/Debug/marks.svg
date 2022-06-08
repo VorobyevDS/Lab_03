@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<svg width='400' height='700' viewBox='0 0 400 700' xmlns='http://www.w3.org/2000/svg'>
-<text x='20' y='20'>7</text><rect x= '50' y='0' width='70' height='50' stroke='red' fill='red' />
- <text x='20' y='70'>3</text><rect x= '50' y='50' width='30' height='50' stroke='red' fill='red' />
- <text x='20' y='120'>2</text><rect x= '50' y='100' width='20' height='50' stroke='red' fill='red' />
- <text x='20' y='170'>1</text><rect x= '50' y='150' width='10' height='50' stroke='red' fill='red' />
- <text x='20' y='220'>2</text><rect x= '50' y='200' width='20' height='50' stroke='red' fill='red' />
- </svg>
