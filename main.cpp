@@ -93,7 +93,12 @@ show_histogram_text(const auto bins){
 }
 
 int
-main() {
+main(int argc, char* argv[]) {
+    if (argc>1){
+        cout<<argc;
+        cout<<" "<<argv[1];
+        return 0;
+    }
     curl_global_init(CURL_GLOBAL_ALL);
     const auto input = read_input(cin, true);
     const auto bins = make_histogram(input);
