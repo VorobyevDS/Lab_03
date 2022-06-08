@@ -30,11 +30,11 @@ void
 show_histogram_svg(const vector<size_t>& bins) {
     size_t bin_height;
     const auto IMAGE_WIDTH = 400;
-    const auto IMAGE_HEIGHT = 300;
+    const auto IMAGE_HEIGHT = 700;
     const auto TEXT_LEFT = 20;
     const auto TEXT_BASELINE = 20;
     const auto TEXT_WIDTH = 50;
-    cerr<< "bin_height"; cin >> bin_height;
+    cerr<< "bin_height="; cin >> bin_height;
     const auto BLOCK_WIDTH = 10;
     double MAX_WIDTH = (IMAGE_WIDTH - TEXT_WIDTH);
     size_t max_bin = bins[0];
