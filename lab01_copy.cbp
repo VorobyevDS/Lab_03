@@ -32,12 +32,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="сurl/include" />
 		</Compiler>
-		<Linker>
-			<Add library="libcurl.dll.a" />
-			<Add directory="сurl/lib" />
-		</Linker>
 		<Unit filename="histogram.cpp" />
 		<Unit filename="histogram.h" />
 		<Unit filename="main.cpp" />

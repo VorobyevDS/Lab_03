@@ -1,14 +1,12 @@
 #include <iostream>
 #include <vector>
-#include <curl/curl.h>
 #include <sstream>
 #include <string>
 #include <windows.h>
+#include <curl/curl.h>
 #include "histogram.h"
 #include "svg.h"
 using namespace std;
-
-DWORD WINAPI GetVersion(void);
 
 struct Input {
     vector<double> numbers;
@@ -94,71 +92,10 @@ show_histogram_text(const auto bins){
 
 }
 
-Input
-download(const string& address) {
-    stringstream buffer;
-    curl_global_init(CURL_GLOBAL_ALL);
-    CURLINFO info;
-    long req;
-    CURL *curl = curl_easy_init();
-    if(curl) {
-        CURLcode res;
-        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
-        res = curl_easy_getinfo(curl, info, &req);
-        if(res != CURLE_OK){
-            fprintf(stderr, "Request size: %ld bytes\n", req);
-            exit(1);
-        }
-
-/*      res = curl_easy_perform(curl);
-        if(res != CURLE_OK){
-            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            exit(1);
-        }
-*/
-        curl_easy_cleanup(curl);
-    }
-    return read_input(buffer, false);
-}
-
-size_t
-write_data(const char* items, size_t item_size, size_t item_count, void* ctx) {
-    size_t data_size = item_size * item_count;
-    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
-    buffer->write(reinterpret_cast<const char*>(items), data_size);
-    return data_size;
-}
-
 int
-main(int argc, char* argv[]) {
-
-    DWORD info = GetVersion();
-    DWORD mask = 0x0000ffff;
-    DWORD version = info & mask;
-
-    char buffer[256];
-    unsigned long size = 256;
-
-    GetComputerName( buffer, &size );
-
-    Input input;
-    if (argc > 1) {
-        input = download(argv[1]);
-    }
-    else {
-        input = read_input(cin, true);
-    }
-
+main() {
+    curl_global_init(CURL_GLOBAL_ALL);
+    const auto input = read_input(cin, true);
     const auto bins = make_histogram(input);
-
     show_histogram_svg(bins);
-
-    if ((info & 0b10000000'00000000'0000000'00000000) == 0) {
-        printf("Windows v5.1 (build");
-        printf(" %x", version);
-        printf(")\n");
-        printf( "%s\n", buffer );
-    }
-
-    return 0;
 }
