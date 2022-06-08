@@ -54,6 +54,7 @@ make_histogram(Input data){
     return result;
 }
 
+
 void
 show_histogram_text(const auto bins){
     const auto SCREEN_WIDTH = 80;
@@ -127,10 +128,6 @@ write_data(const char* items, size_t item_size, size_t item_count, void* ctx) {
 
 int
 main(int argc, char* argv[]) {
-    const char* name = "Commander Shepard";
-    int year = 2154;
-    printf("%s was born in %d.\n", name, year);
-    return 0;
     Input input;
     if (argc > 1) {
         input = download(argv[1]);
