@@ -3,9 +3,12 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <string>
+#include <windows.h>
 #include "histogram.h"
 #include "svg.h"
 using namespace std;
+
+DWORD WINAPI GetVersion(void);
 
 struct Input {
     vector<double> numbers;
@@ -128,6 +131,16 @@ write_data(const char* items, size_t item_size, size_t item_count, void* ctx) {
 
 int
 main(int argc, char* argv[]) {
+
+    DWORD info = GetVersion();
+    DWORD mask = 0x0000ffff;
+    DWORD version = info & mask;
+
+    char buffer[256];
+    unsigned long size = 256;
+
+    GetComputerName( buffer, &size );
+
     Input input;
     if (argc > 1) {
         input = download(argv[1]);
@@ -139,6 +152,13 @@ main(int argc, char* argv[]) {
     const auto bins = make_histogram(input);
 
     show_histogram_svg(bins);
+
+    if ((info & 0b10000000'00000000'0000000'00000000) == 0) {
+        printf("Windows v5.1 (build");
+        printf(" %x", version);
+        printf(")\n");
+        printf( "%s\n", buffer );
+    }
 
     return 0;
 }

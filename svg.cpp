@@ -30,7 +30,7 @@ void
 show_histogram_svg(const vector<size_t>& bins) {
     size_t bin_height;
     const auto IMAGE_WIDTH = 400;
-    const auto IMAGE_HEIGHT = 700;
+    const auto IMAGE_HEIGHT = 300;
     const auto TEXT_LEFT = 20;
     const auto TEXT_BASELINE = 20;
     const auto TEXT_WIDTH = 50;
