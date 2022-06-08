@@ -28,12 +28,13 @@ svg_end() {
 
 void
 show_histogram_svg(const vector<size_t>& bins) {
+    size_t bin_height;
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 700;
     const auto TEXT_LEFT = 20;
     const auto TEXT_BASELINE = 20;
     const auto TEXT_WIDTH = 50;
-    const auto BIN_HEIGHT = 30;
+    cerr<< "bin_height"; cin >> bin_height;
     const auto BLOCK_WIDTH = 10;
     double MAX_WIDTH = (IMAGE_WIDTH - TEXT_WIDTH);
     size_t max_bin = bins[0];
@@ -53,8 +54,8 @@ show_histogram_svg(const vector<size_t>& bins) {
             bin_width = MAX_WIDTH * (static_cast<double>(bin) / max_bin);
         }
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "red", "red");
-        top += BIN_HEIGHT;
+        svg_rect(TEXT_WIDTH, top, bin_width, bin_height, "red", "red");
+        top += bin_height;
 }
     svg_end();
 }

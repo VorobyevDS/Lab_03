@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <curl/curl.h>
+#include <sstream>
+#include <string>
 #include "histogram.h"
 #include "svg.h"
 using namespace std;
@@ -89,26 +91,50 @@ show_histogram_text(const auto bins){
 
 }
 
+Input
+download(const string& address) {
+    stringstream buffer;
+    curl_global_init(CURL_GLOBAL_ALL);
+    CURLINFO info;
+    long req;
+    CURL *curl = curl_easy_init();
+    if(curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        res = curl_easy_getinfo(curl, info, &req);
+        if(res != CURLE_OK){
+            fprintf(stderr, "Request size: %ld bytes\n", req);
+            exit(1);
+        }
+
+/*      res = curl_easy_perform(curl);
+        if(res != CURLE_OK){
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+            exit(1);
+        }
+*/
+        curl_easy_cleanup(curl);
+    }
+    return read_input(buffer, false);
+}
+
+size_t
+write_data(const char* items, size_t item_size, size_t item_count, void* ctx) {
+    size_t data_size = item_size * item_count;
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    buffer->write(reinterpret_cast<const char*>(items), data_size);
+    return data_size;
+}
+
 int
 main(int argc, char* argv[]) {
-    if (argc>1){
-        curl_global_init(CURL_GLOBAL_ALL);
-
-        CURL *curl = curl_easy_init();
-        if(curl) {
-            CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
-            res = curl_easy_perform(curl);
-            if(res != CURLE_OK)
-                fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-                exit(1);
-            curl_easy_cleanup(curl);
-        }
-        return 0;
+    Input input;
+    if (argc > 1) {
+        input = download(argv[1]);
     }
-
-
-    const auto input = read_input(cin, true);
+    else {
+        input = read_input(cin, true);
+    }
 
     const auto bins = make_histogram(input);
 
