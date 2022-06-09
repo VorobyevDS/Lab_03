@@ -22,13 +22,13 @@ input_numbers(istream& in, size_t count) {
     return result;
 }
 
-Input
-read_input(istream& in,  bool prompt) {
+Input read_input(istream& in,  bool prompt) {
     Input data;
     if (prompt)
         cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
+
     if (prompt)
         cerr << "Enter numbers: ";
     data.numbers = input_numbers(in, number_count);
@@ -92,22 +92,67 @@ show_histogram_text(const auto bins){
 
 }
 
+size_t
+write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    size_t data_size=item_size*item_count;
+    buffer->write((const char*)items, data_size);
+    return data_size;
+}
+
+Input
+download(const string& address) {
+    stringstream buffer;
+
+    CURL *curl = curl_easy_init();
+    if(curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK){
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+            exit(1);
+        }
+        if(!res) {
+            curl_off_t speed;
+            res = curl_easy_getinfo(curl, CURLINFO_SPEED_DOWNLOAD_T, &speed);
+            if(!res) {
+                cerr<<"Download speed = "<<speed <<" bytes/sec";
+            }
+        }
+
+        curl_easy_cleanup(curl);
+    }
+    return read_input(buffer, false);
+}
+
 int
 main(int argc, char* argv[]) {
-    if (argc>1){
-        CURL *curl = curl_easy_init();
-        if(curl) {
-            CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
-            res = curl_easy_perform(curl);
-            if (res != CURLE_OK){
-                fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            }
-            curl_easy_cleanup(curl);
-        }
-        return 0;
+
+ /*   DWORD infover = GetVersion();
+    printf("\ninfo_10= %lu, info_16= %08lx", infover, infover);
+    DWORD mask = 0x0000ffff;
+    DWORD version = infover & mask;
+    DWORD version_major = version & 0b00000000'00000000'00000000'11111111;
+    DWORD version_minor = version >> 8;
+    printf("\nWindows v%lu.%lu", version_major, version_minor);
+// Windows v6.2 должны получить
+    DWORD platform;
+    if ((infover & 0x80000000 ) == 0) {
+            platform = infover >> 16;
+    } else {
+            platform = ( infover >> 24 ) & 0x7f;
     }
-    const auto input = read_input(cin, true);
+    printf(" bild(%lu)\n", platform);*/
+
+    Input input;
+    if (argc > 1) {
+        input = download(argv[1]);
+    } else {
+        input = read_input(cin, true);
+    }
     const auto bins = make_histogram(input);
     show_histogram_svg(bins);
 }
